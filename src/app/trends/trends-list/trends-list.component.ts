@@ -24,13 +24,13 @@ import { updateSidebarState } from '../../store/actions/loader.actions';
         <p class="trend__excerpt">{{ trend.body[0] }}</p>
       </a>
     </article>
-    <app-sidebar></app-sidebar>
+    <app-sidebar [trendDetail]="trend"></app-sidebar>
   `,
   styleUrls: ['./trends-list.component.scss'],
 })
 export class TrendsListComponent implements OnInit {
   protected trends$ = this.store.select(selectTrendsByProvider);
-
+  public trend!: any;
   constructor(private store: Store) {}
 
   ngOnInit() {

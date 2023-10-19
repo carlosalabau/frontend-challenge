@@ -7,6 +7,7 @@ import { Trend } from '../trends/models/trend.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TrendService } from '../trends/trend.service';
 import { loadTrends } from '../trends/store/actions/trends-list-page.actions';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-sidebar',
   template: `
@@ -58,7 +59,11 @@ import { loadTrends } from '../trends/store/actions/trends-list-page.actions';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(private store: Store, private trendService: TrendService) {}
+  constructor(
+    private store: Store,
+    private trendService: TrendService,
+    private router: Router
+  ) {}
   @Input() set trendDetail(value: Trend) {
     this.idTrend = value?.id || '';
     this.editTrendForm = new FormGroup({
@@ -84,16 +89,16 @@ export class SidebarComponent implements OnInit {
     this.trendService
       .editTrend(this.idTrend, this.editTrendForm.value)
       .subscribe(() => {
+        this.router.navigate(['trends']);
         this.closeSidebar();
       });
   }
 
   addNewTrend() {
+    console.log(this.editTrendForm.value);
     this.trendService.createTrend(this.editTrendForm.value).subscribe(() => {
       this.closeSidebar();
       this.store.dispatch(loadTrends());
     });
   }
-
-  removeTrend() {}
 }

@@ -1,5 +1,5 @@
 .sidebar {
-  width: 491px;
+  width: 30%;
   position: absolute;
   top: 0;
   height: 100vh;
@@ -60,5 +60,11 @@ form {
     input {
       height: 56px;
     }
+  }
+}
+
+@media screen and (min-width: 400px) and (max-width: 768px) {
+  .sidebar {
+    width: 100%;
   }
 }

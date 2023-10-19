@@ -55,4 +55,9 @@ export class TrendService {
     const url = `${this.getAllUrl}`;
     return this.httpClient.post(url, trend);
   }
+
+  public removeTrend(id: string) {
+    const url = `${this.getAllUrl}/${id}`;
+    return this.httpClient.delete(url);
+  }
 }

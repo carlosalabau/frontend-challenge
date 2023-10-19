@@ -4,6 +4,9 @@ import { Store } from '@ngrx/store';
 import { selectSelectedTrend } from '../store/selectors';
 import { updateSidebarState } from '../../store/actions/loader.actions';
 import { Trend } from '../models/trend.model';
+import { TrendService } from '../trend.service';
+import { loadTrends } from '../store/actions/trends-list-page.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trend-detail',
@@ -27,7 +30,11 @@ import { Trend } from '../models/trend.model';
           >
             <img src="assets/Iconos/Actions/edit.svg" alt="Editar noticia" />
           </button>
-          <button type="button" class="trend__action">
+          <button
+            type="button"
+            class="trend__action"
+            (click)="deleteTrend(trend.id)"
+          >
             <img src="assets/Iconos/Actions/delete.svg" alt="Borrar noticia" />
           </button>
         </div>
@@ -53,7 +60,11 @@ import { Trend } from '../models/trend.model';
 export class TrendDetailComponent {
   protected trend$ = this.store.select(selectSelectedTrend);
   trendDetail!: any;
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private trendService: TrendService,
+    private router: Router
+  ) {}
 
   openSidebar(trend?: Trend) {
     trend ? (this.trendDetail = trend) : (this.trendDetail = undefined);
@@ -63,5 +74,13 @@ export class TrendDetailComponent {
         isOpenSidebar: true,
       })
     );
+  }
+
+  deleteTrend(id: string) {
+    this.trendService.removeTrend(id).subscribe(() => {
+      this.store.dispatch(updateSidebarState({ isOpenSidebar: false }));
+      this.store.dispatch(loadTrends());
+      this.router.navigate(['trends']);
+    });
   }
 }
