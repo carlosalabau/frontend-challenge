@@ -3,11 +3,16 @@ import { Store } from '@ngrx/store';
 
 import { loadTrends } from '../store/actions/trends-list-page.actions';
 import { selectTrendsByProvider } from '../store/selectors';
+import { updateSidebarState } from '../../store/actions/loader.actions';
 
 @Component({
   selector: 'app-trends-list',
   template: `
-    <img class="add_image" src="assets/Iconos/Actions/add_figma.svg" />
+    <img
+      class="add_image"
+      src="assets/Iconos/Actions/add_figma.svg"
+      (click)="openSidebar()"
+    />
     <article class="trend" *ngFor="let trend of trends$ | async">
       <a class="trend__link" routerLink="/trends/{{ trend.id }}">
         <figure class="trend__figure">
@@ -19,6 +24,7 @@ import { selectTrendsByProvider } from '../store/selectors';
         <p class="trend__excerpt">{{ trend.body[0] }}</p>
       </a>
     </article>
+    <app-sidebar></app-sidebar>
   `,
   styleUrls: ['./trends-list.component.scss'],
 })
@@ -29,5 +35,9 @@ export class TrendsListComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(loadTrends());
+  }
+
+  openSidebar(): void {
+    this.store.dispatch(updateSidebarState({ isOpenSidebar: true }));
   }
 }

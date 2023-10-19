@@ -6,6 +6,7 @@ import { selectSelectedTrend } from '../trends/store/selectors';
 import { Trend } from '../trends/models/trend.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TrendService } from '../trends/trend.service';
+import { loadTrends } from '../trends/store/actions/trends-list-page.actions';
 @Component({
   selector: 'app-sidebar',
   template: `
@@ -13,8 +14,8 @@ import { TrendService } from '../trends/trend.service';
       <article>
         <header>
           <div class="title_sidebar">
-            <h3 *ngIf="selectedTrend$; else newTrendBlock">Editar noticia</h3>
-            <ng-template #newTrendBlock>Nueva noticia</ng-template>
+            <h3 *ngIf="idTrend; else newTrendBlock">Editar noticia</h3>
+            <ng-template #newTrendBlock><h3>Nueva noticia</h3></ng-template>
           </div>
           <div class="buttons_sidebar">
             <button
@@ -24,7 +25,11 @@ import { TrendService } from '../trends/trend.service';
             >
               Cancelar
             </button>
-            <button type="button" class="save_trend_btn" (click)="saveTrend()">
+            <button
+              type="button"
+              class="save_trend_btn"
+              (click)="idTrend ? editTrend() : addNewTrend()"
+            >
               Guardar
             </button>
           </div>
@@ -54,34 +59,41 @@ import { TrendService } from '../trends/trend.service';
 })
 export class SidebarComponent implements OnInit {
   constructor(private store: Store, private trendService: TrendService) {}
+  @Input() set trendDetail(value: Trend) {
+    this.idTrend = value?.id || '';
+    this.editTrendForm = new FormGroup({
+      url: new FormControl(value?.url || ''),
+      title: new FormControl(value?.title || ''),
+      body: new FormControl(value?.body.toString() || ''),
+      image: new FormControl('https://images.app.goo.gl/QQyfbjhpcbiQ7Khe7'),
+      provider: new FormControl('elpais'),
+    });
+  }
 
   isOpenSidebar$ = this.store.select(selectIsOpenSidebar);
   selectedTrend$ = this.store.select(selectSelectedTrend);
   public editTrendForm: FormGroup = new FormGroup({});
-  private idTrend!: string;
-  ngOnInit(): void {
-    this.selectedTrend$.subscribe((trend) => {
-      if (trend) {
-        this.idTrend = trend.id;
-        this.editTrendForm = new FormGroup({
-          url: new FormControl(trend.url),
-          title: new FormControl(trend.title),
-          body: new FormControl(trend.body.toString()),
-        });
-      }
-    });
-  }
+  public idTrend!: string;
+  ngOnInit(): void {}
 
   closeSidebar(): void {
     this.store.dispatch(updateSidebarState({ isOpenSidebar: false }));
   }
 
-  saveTrend() {
+  editTrend() {
     this.trendService
       .editTrend(this.idTrend, this.editTrendForm.value)
-      .subscribe((val) => {
-        console.log(val);
+      .subscribe(() => {
         this.closeSidebar();
       });
   }
+
+  addNewTrend() {
+    this.trendService.createTrend(this.editTrendForm.value).subscribe(() => {
+      this.closeSidebar();
+      this.store.dispatch(loadTrends());
+    });
+  }
+
+  removeTrend() {}
 }

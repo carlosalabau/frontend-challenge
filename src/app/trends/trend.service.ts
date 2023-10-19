@@ -50,4 +50,9 @@ export class TrendService {
     const url = `${this.getAllUrl}/${id}`;
     return this.httpClient.put<updatedTrendResponse>(url, trend);
   }
+
+  public createTrend(trend: TrendPartial) {
+    const url = `${this.getAllUrl}`;
+    return this.httpClient.post(url, trend);
+  }
 }
