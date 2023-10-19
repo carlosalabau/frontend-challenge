@@ -2,10 +2,16 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { selectSelectedTrend } from '../store/selectors';
+import { updateSidebarState } from '../../store/actions/loader.actions';
 
 @Component({
   selector: 'app-trend-detail',
   template: `
+    <img
+      class="add_image"
+      (click)="addTrend()"
+      src="assets/Iconos/Actions/add_figma.svg"
+    />
     <a class="link-to-home" routerLink="/trends">
       <img src="assets/Iconos/Actions/back.svg" alt="Flecha hacia atrás" />
       <span>TODOS LOS EVENTOS</span>
@@ -35,6 +41,7 @@ import { selectSelectedTrend } from '../store/selectors';
         </div>
       </div>
     </article>
+    <app-sidebar></app-sidebar>
   `,
   styleUrls: ['./trend-detail.component.scss'],
 })
@@ -42,4 +49,13 @@ export class TrendDetailComponent {
   protected trend$ = this.store.select(selectSelectedTrend);
 
   constructor(private store: Store) {}
+  editTrend(): void {}
+
+  addTrend() {
+    this.store.dispatch(
+      updateSidebarState({
+        isOpenSidebar: true,
+      })
+    );
+  }
 }

@@ -7,6 +7,7 @@ import { selectTrendsByProvider } from '../store/selectors';
 @Component({
   selector: 'app-trends-list',
   template: `
+    <img class="add_image" src="assets/Iconos/Actions/add_figma.svg" />
     <article class="trend" *ngFor="let trend of trends$ | async">
       <a class="trend__link" routerLink="/trends/{{ trend.id }}">
         <figure class="trend__figure">

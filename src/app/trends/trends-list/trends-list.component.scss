@@ -1,4 +1,4 @@
-@import 'settings/variables';
+@import "settings/variables";
 
 .trend {
   width: 100%;
@@ -42,7 +42,7 @@
     margin-bottom: 0.75rem;
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       right: 0;
@@ -86,6 +86,14 @@
     font-size: 0.75rem;
     margin: 0;
   }
+}
+
+.add_image {
+  position: absolute;
+  width: 100px;
+  right: 2%;
+  top: 70%;
+  z-index: 999;
 }
 
 @media screen and (max-width: 767px) {

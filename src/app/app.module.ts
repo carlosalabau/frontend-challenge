@@ -16,6 +16,8 @@ import { httpInterceptorProviders } from './app-http-interceptors';
 import { reducers } from './store/reducers';
 
 import localeEs from '@angular/common/locales/es';
+import { SidebarComponent } from './sidebar/sidebar.component';
+
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -32,7 +34,7 @@ registerLocaleData(localeEs, 'es');
     AppMenuModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot()
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }, httpInterceptorProviders],
   bootstrap: [AppComponent],

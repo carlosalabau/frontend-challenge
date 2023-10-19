@@ -3,11 +3,12 @@ import { Store } from '@ngrx/store';
 import { delay } from 'rxjs/operators';
 
 import { CustomBreakpointObserver } from './layout';
-import { selectIsLoadingState } from './store/selectors';
+import { selectIsLoadingState, selectIsOpenSidebar } from './store/selectors';
 
 @Component({
   selector: 'app-root',
   template: `
+    <div [ngClass]="{ 'all-screen': isOpenSidebar$ | async }"></div>
     <app-progress-bar
       *ngIf="isLoading$ | async"
       class="app-progress-bar"
@@ -22,7 +23,7 @@ import { selectIsLoadingState } from './store/selectors';
         />
       </a>
       <div class="app-current-date">
-        <span>{{ currentDate | date: 'dd MMMM yyyy' }}</span>
+        <span>{{ currentDate | date : 'dd MMMM yyyy' }}</span>
       </div>
     </header>
     <nav class="app-navigation">
@@ -43,7 +44,7 @@ export class AppComponent {
   isLargeScreen$ = this.breakpointsObserver.isLarge$;
   // The delay prevents ExpressionChangedAfterItHasBeenCheckedError
   isLoading$ = this.store.select(selectIsLoadingState).pipe(delay(0));
-
+  isOpenSidebar$ = this.store.select(selectIsOpenSidebar);
   constructor(
     private breakpointsObserver: CustomBreakpointObserver,
     private store: Store
