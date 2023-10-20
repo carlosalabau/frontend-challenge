@@ -16,7 +16,8 @@ import { httpInterceptorProviders } from './app-http-interceptors';
 import { reducers } from './store/reducers';
 
 import localeEs from '@angular/common/locales/es';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 registerLocaleData(localeEs, 'es');
 
@@ -25,6 +26,8 @@ registerLocaleData(localeEs, 'es');
     AppComponent,
     AppProgressBarComponent,
     AppPageNotFoundComponent,
+    ModalComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,

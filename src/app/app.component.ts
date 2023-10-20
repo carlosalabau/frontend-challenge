@@ -34,6 +34,7 @@ import { selectIsLoadingState, selectIsOpenSidebar } from './store/selectors';
     <main class="app-main-content">
       <router-outlet></router-outlet>
     </main>
+    <app-toast></app-toast>
   `,
   styleUrls: ['./app.component.scss'],
 })

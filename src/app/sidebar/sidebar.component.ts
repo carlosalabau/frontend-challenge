@@ -8,6 +8,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { TrendService } from '../trends/trend.service';
 import { loadTrends } from '../trends/store/actions/trends-list-page.actions';
 import { Router } from '@angular/router';
+import { ToastService } from '../components/toast/services/toast.service';
+import { catchError } from 'rxjs';
 @Component({
   selector: 'app-sidebar',
   template: `
@@ -42,15 +44,23 @@ import { Router } from '@angular/router';
           </div>
           <div class="field">
             <label for="url">Autor</label>
-            <input type="text" />
+            <!--  <input type="text" formControlName="provider" /> -->
+            <select formControlName="provider" id="provider">
+              <option value="elmundo">El mundo</option>
+              <option value="elpais">El pais</option>
+            </select>
           </div>
           <div class="field">
             <label for="url">Titulo</label>
             <input type="text" formControlName="title" />
           </div>
           <div class="field">
+            <label for="url">Imagen</label>
+            <input type="text" formControlName="image" />
+          </div>
+          <div class="field">
             <label for="url">Contenido</label>
-            <textarea rows="30" type="text" formControlName="body"></textarea>
+            <textarea rows="20" type="text" formControlName="body"></textarea>
           </div>
         </form>
       </article>
@@ -62,7 +72,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private store: Store,
     private trendService: TrendService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {}
   @Input() set trendDetail(value: Trend) {
     this.idTrend = value?.id || '';
@@ -70,8 +81,8 @@ export class SidebarComponent implements OnInit {
       url: new FormControl(value?.url || ''),
       title: new FormControl(value?.title || ''),
       body: new FormControl(value?.body.toString() || ''),
-      image: new FormControl('https://images.app.goo.gl/QQyfbjhpcbiQ7Khe7'),
-      provider: new FormControl('elpais'),
+      image: new FormControl(value?.image || ''),
+      provider: new FormControl(value?.provider || ''),
     });
   }
 
@@ -88,17 +99,39 @@ export class SidebarComponent implements OnInit {
   editTrend() {
     this.trendService
       .editTrend(this.idTrend, this.editTrendForm.value)
-      .subscribe(() => {
-        this.router.navigate(['trends']);
-        this.closeSidebar();
+      .subscribe({
+        next: () => {
+          this.router.navigate(['trends']);
+          this.closeSidebar();
+          this.toastService.showToast(
+            'Noticia actualizada con exito',
+            3000,
+            'success'
+          );
+        },
+        error: (err) => {
+          this.toastService.showToast(
+            `Ha ocurrido un error: ${JSON.stringify(err)}`,
+            3000,
+            'error'
+          );
+        },
       });
   }
 
   addNewTrend() {
-    console.log(this.editTrendForm.value);
-    this.trendService.createTrend(this.editTrendForm.value).subscribe(() => {
-      this.closeSidebar();
-      this.store.dispatch(loadTrends());
+    this.trendService.createTrend(this.editTrendForm.value).subscribe({
+      next: () => {
+        this.closeSidebar();
+        this.store.dispatch(loadTrends());
+      },
+      error: (err) => {
+        this.toastService.showToast(
+          `Ha ocurrido un error: ${JSON.stringify(err)}`,
+          3000,
+          'error'
+        );
+      },
     });
   }
 }
