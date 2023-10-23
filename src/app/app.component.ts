@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { delay } from 'rxjs/operators';
 
-import { CustomBreakpointObserver } from './layout';
 import {
   selectIsLoadingState,
   selectIsModalOpen,
   selectIsOpenSidebar,
-} from './store/selectors';
+} from './core/store/selectors';
+import { CustomBreakpointObserver } from './ui/layout';
 
 @Component({
   selector: 'app-root',

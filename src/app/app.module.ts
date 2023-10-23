@@ -6,17 +6,19 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { registerLocaleData } from '@angular/common';
 
 import { AppComponent } from './app.component';
-import { AppLayoutModule } from './layout';
-import { AppMenuModule } from './menu';
+
 import { AppPageNotFoundComponent } from './app-page-not-found.component';
 import { AppProgressBarComponent } from './app-progress-bar.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AppTrendsModule } from './trends';
+
 import { httpInterceptorProviders } from './app-http-interceptors';
-import { reducers } from './store/reducers';
+import { reducers } from './core/store/reducers';
 
 import localeEs from '@angular/common/locales/es';
-import { ToastComponent } from './components/toast/toast.component';
+import { ToastComponent } from './features/components/toast/toast.component';
+import { AppTrendsModule } from './features/trends';
+import { AppMenuModule } from './ui/menu';
+import { AppLayoutModule } from './ui/layout';
 
 registerLocaleData(localeEs, 'es');
 

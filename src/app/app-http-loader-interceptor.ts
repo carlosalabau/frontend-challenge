@@ -2,13 +2,13 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpRequest
+  HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { finalize, Observable } from 'rxjs';
 
-import { updateLoaderState } from './store/actions/loader.actions';
+import { updateLoaderState } from './core/store/actions/loader.actions';
 
 @Injectable()
 export class AppHttpLoaderInterceptor implements HttpInterceptor {
