@@ -8,6 +8,9 @@ export const selectLoaderState =
 export const selectSidebarState =
   createFeatureSelector<fromLoaderReducer.State>('sidebar');
 
+export const selectModalState =
+  createFeatureSelector<fromLoaderReducer.State>('modal');
+
 export const selectIsLoadingState = createSelector(
   selectLoaderState,
   fromLoaderReducer.selectIsLoadingState
@@ -16,4 +19,9 @@ export const selectIsLoadingState = createSelector(
 export const selectIsOpenSidebar = createSelector(
   selectSidebarState,
   fromLoaderReducer.selectIsOpenSidebarState
+);
+
+export const selectIsModalOpen = createSelector(
+  selectModalState,
+  fromLoaderReducer.selectIsOpenModalState
 );

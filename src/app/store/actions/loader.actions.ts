@@ -9,3 +9,8 @@ export const updateSidebarState = createAction(
   '[Loader] Update sidebar state',
   props<{ isOpenSidebar: boolean }>()
 );
+
+export const updateModalState = createAction(
+  '[Loader] Update modal state',
+  props<{ isOpenModal: boolean }>()
+);

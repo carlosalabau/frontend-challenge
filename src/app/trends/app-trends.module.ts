@@ -13,9 +13,15 @@ import { TrendsListComponent } from './trends-list/trends-list.component';
 import { trendsEffects } from './store/effects';
 import { trendsFeatureKey, trendsReducer } from './store/reducers';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { ModalComponent } from '../components/modal/modal.component';
 
 @NgModule({
-  declarations: [TrendsListComponent, TrendDetailComponent, SidebarComponent],
+  declarations: [
+    TrendsListComponent,
+    TrendDetailComponent,
+    SidebarComponent,
+    ModalComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

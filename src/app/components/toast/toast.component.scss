@@ -1,21 +1,23 @@
 .toast {
-  width: 16%;
-  left: 50%;
+  min-width: 16%;
   position: absolute;
   top: 2%;
-  height: 60px;
+  min-height: 60px;
   color: white;
   z-index: 999999;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  padding: 0 5%;
 }
 
 .success {
-  background-color: rgba(16, 75, 16, 0.885);
+  background-color: #f15f41;
+  left: 50%;
 }
 
 .error {
   background-color: rgb(95, 3, 3);
+  left: 30%;
 }

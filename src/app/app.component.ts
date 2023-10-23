@@ -3,12 +3,20 @@ import { Store } from '@ngrx/store';
 import { delay } from 'rxjs/operators';
 
 import { CustomBreakpointObserver } from './layout';
-import { selectIsLoadingState, selectIsOpenSidebar } from './store/selectors';
+import {
+  selectIsLoadingState,
+  selectIsModalOpen,
+  selectIsOpenSidebar,
+} from './store/selectors';
 
 @Component({
   selector: 'app-root',
   template: `
-    <div [ngClass]="{ 'all-screen': isOpenSidebar$ | async }"></div>
+    <div
+      [ngClass]="{
+        'all-screen': (isOpenSidebar$ | async) || (isOpenModal$ | async)
+      }"
+    ></div>
     <app-progress-bar
       *ngIf="isLoading$ | async"
       class="app-progress-bar"
@@ -46,6 +54,7 @@ export class AppComponent {
   // The delay prevents ExpressionChangedAfterItHasBeenCheckedError
   isLoading$ = this.store.select(selectIsLoadingState).pipe(delay(0));
   isOpenSidebar$ = this.store.select(selectIsOpenSidebar);
+  isOpenModal$ = this.store.select(selectIsModalOpen);
   constructor(
     private breakpointsObserver: CustomBreakpointObserver,
     private store: Store

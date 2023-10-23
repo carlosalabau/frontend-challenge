@@ -1,0 +1,33 @@
+.modal {
+  position: absolute;
+  padding: 1%;
+  background-color: white;
+  height: auto;
+  top: 25%;
+  left: 35%;
+  z-index: 9999;
+  border-radius: 5px;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  .buttons_modal {
+    display: flex;
+    justify-content: end;
+    margin-top: 15px;
+    button {
+      cursor: pointer;
+      padding: 7px 10px;
+    }
+    .confirm {
+      background-color: #f15f41;
+      border: none;
+      color: white;
+    }
+    .cancel {
+      background-color: transparent;
+      border: none;
+      color: #939393;
+      margin-right: 10px;
+    }
+  }
+}
