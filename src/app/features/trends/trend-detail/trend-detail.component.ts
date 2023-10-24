@@ -78,7 +78,7 @@ export class TrendDetailComponent {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  openSidebar(trend?: Trend) {
+  openSidebar(trend?: Trend): void {
     trend ? (this.trendDetail = trend) : (this.trendDetail = undefined);
 
     this.store.dispatch(
@@ -88,7 +88,7 @@ export class TrendDetailComponent {
     );
   }
 
-  handleConfirmation() {
+  handleConfirmation(): void {
     const idTrend = this.activatedRoute.snapshot.params['id'];
     this.trendService.removeTrend(idTrend).subscribe({
       next: () => {
@@ -107,11 +107,11 @@ export class TrendDetailComponent {
     });
   }
 
-  handleCancellation() {
+  handleCancellation(): void {
     this.store.dispatch(updateModalState({ isOpenModal: false }));
   }
 
-  deleteTrend() {
+  deleteTrend(): void {
     this.store.dispatch(updateModalState({ isOpenModal: true }));
   }
 }

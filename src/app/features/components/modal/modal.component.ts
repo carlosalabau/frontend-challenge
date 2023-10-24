@@ -18,11 +18,11 @@ export class ModalComponent implements OnInit {
   @Output() accept: EventEmitter<void> = new EventEmitter<void>();
   @Output() reject: EventEmitter<void> = new EventEmitter<void>();
 
-  confirm() {
+  confirm(): void {
     this.accept.emit();
   }
 
-  cancel() {
+  cancel(): void {
     this.reject.emit();
   }
   constructor() {}

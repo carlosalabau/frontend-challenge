@@ -10,7 +10,7 @@ export class ToastService {
   public toast$: Observable<blockToast> = this.toastSubject.asObservable();
   constructor() {}
 
-  showToast(message: string, duration: number, type: string) {
+  showToast(message: string, duration: number, type: string): void {
     this.toastSubject.next({
       message,
       duration,
@@ -20,7 +20,7 @@ export class ToastService {
       this.clearMessage();
     }, duration);
   }
-  clearMessage() {
+  clearMessage(): void {
     this.toastSubject.next({
       message: '',
     });

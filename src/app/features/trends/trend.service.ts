@@ -9,6 +9,7 @@ import { TrendProvider } from './models/trend-provider.model';
 import { TrendResponse } from './models/trend-response.model';
 import { environment } from 'src/environments/environment';
 import { updatedTrendResponse } from './models/update-trend-reponse.model';
+import { createTrendResponse } from './models/create-trend-response';
 
 @Injectable()
 export class TrendService {
@@ -51,13 +52,13 @@ export class TrendService {
     return this.httpClient.put<updatedTrendResponse>(url, trend);
   }
 
-  public createTrend(trend: TrendPartial) {
+  public createTrend(trend: TrendPartial): Observable<createTrendResponse> {
     const url = `${this.getAllUrl}`;
-    return this.httpClient.post(url, trend);
+    return this.httpClient.post<createTrendResponse>(url, trend);
   }
 
-  public removeTrend(id: string) {
+  public removeTrend(id: string): Observable<updatedTrendResponse> {
     const url = `${this.getAllUrl}/${id}`;
-    return this.httpClient.delete(url);
+    return this.httpClient.delete<updatedTrendResponse>(url);
   }
 }
